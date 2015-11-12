@@ -156,6 +156,20 @@ function Ohmage(app, client){
 	oh.campaign = {};
 	oh.document = {};
 	oh.survey = {};
+	oh.request = {};
+
+	oh.request.create = function(data){
+		data.type = "user_setup",
+		data.uuid = "123"
+		return oh.call("/access_request/create", data);
+	}
+
+	oh.request.read = function(username){
+		return oh.call("/access_request/read", {
+			user_list : username,
+			type : "user_setup"
+		});
+	}
 
 	//API wrappres
 	oh.config.read = function(){
