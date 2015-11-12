@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Setup Request</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="app.css">
+
+	<script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script src="//cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
+	<script src="js/jquery-cookie.js"></script>
+	<script src="js/utf2ascii.js"></script>
+	<script src="js/ohmage.js"></script>
+	<script src="app.js"></script>
+
+</head>
+<body>
+
+
+	<!-- Begin page content -->
+	<div class="container">
+
+		<div class="row">
+
+			<div class="page-header">
+				<h1>Create User Request Form <small id="subtitle"></small></h1>
+			</div>
+
+			<div class="col-md-10 col-md-offset-1" id="errordiv"></div>
+		</div>
+
+		<div class="row">
+			<form>
+				<div class="col-md-3">
+					<div class="form-group">
+						<label for="exampleInputEmail1">Name</label>
+						<input class="form-control" id="form_name" disabled>
+					</div>
+					<div class="form-group">
+						<label for="exampleInputEmail1">Organization</label>
+						<input class="form-control" id="form_org" disabled>
+					</div>		
+					<div class="form-group">
+						<label for="exampleInputEmail1">Email address</label>
+						<input type="email" class="form-control" id="form_email" placeholder="required">
+					</div>
+				</div>
+				<div class="col-md-9">
+					<div class="form-group">
+						<label for="exampleInputPassword1">Comments</label>
+						<textarea rows="8" class="form-control" placeholder="What are your plans"></textarea>
+					</div>
+					
+					<div class="checkbox">
+						<label>
+							<input type="checkbox"> I agree with undefined policies
+						</label>
+					</div>
+
+					<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-envelope"></span> Submit Request</button>
+				</div>
+			</form>
+
+		</div>
+	</div>
+
+</body>
+</html>
