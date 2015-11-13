@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Setup Request</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="//cdn.datatables.net/1.10.9/css/dataTables.bootstrap.min.css">
+
+	<script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script src="//cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
+	<script src="js/jquery-cookie.js"></script>
+	<script src="js/utf2ascii.js"></script>
+	<script src="js/ohmage.js"></script>
+	<script src="admin.js"></script>
+
+</head>
+<body>
+
+
+	<!-- Begin page content -->
+	<div class="container">
+
+		<div class="row">
+
+			<div class="page-header">
+				<h1>Setup Requests <small id="subtitle"></small></h1>
+			</div>
+
+			<div class="col-md-10 col-md-offset-1" id="errordiv"></div>
+		</div>
+
+
+		<div class="row">
+			<div id="class-select">
+				<table class="table" id="requesttable">
+					<thead>
+						<tr>
+							<th>Date</th>
+							<th>User</th>
+							<th>Email</th>
+							<th>Status</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+			</div>			
+		</div>
+
+	</div>
+</body>
+</html>
