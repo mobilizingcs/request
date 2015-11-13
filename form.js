@@ -5,7 +5,6 @@ $(function(){
 
     //initiate the client
     var oh = Ohmage("/app", "setup-request");
-    var userdata;
     var uuid;
 
     //debug
@@ -26,16 +25,18 @@ $(function(){
 	    //user info
 	    oh.user.read({user:username}).done(function(data){
 	    	//prefill some form fields
-	    	userdata = data[username];
+	    	var userdata = data[username];
 	    	$("#form_name").val(userdata.first_name + " " + userdata.last_name);
 	    	$("#form_org").val(userdata.organization);
 
 	    	//test user privileges
-	    	if(false && userdata.permissions.admin){
+	    	if(userdata.permissions.admin){
+	    		alert("You are admin, silly!");
+	    	} 
 
-	    	} else if(userdata.permissions.user_setup){
+	    	if(userdata.permissions.user_setup){
 	    		alert("You have setup privileges!");
-				//location.replace("/");
+				location.replace("/");
 			} else {
 				oh.request.read(username).done(function(data){
 					var keys = Object.keys(data)
