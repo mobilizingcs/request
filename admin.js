@@ -22,6 +22,22 @@ $(function(){
 		]
 	});
 
+	//expand table row
+	$('#requesttable').on('click', "tbody td:not('.buttontd')", function () {
+		var tr = $(this).parent()
+		var row = table.row(tr);
+		if(tr.attr("role") != "row") return;
+		if ( row.child.isShown() ) {
+			// This row is already open - close it
+			row.child.hide();
+			tr.removeClass('shown');
+		} else {
+			// Open this row
+			row.child( expand(row.data(), tr.data("requestdata"))).show();
+			tr.addClass('shown');
+		}
+	});	
+
 	//init app
 	oh.user.whoami().done(function(username){
 
@@ -47,11 +63,23 @@ $(function(){
 					.append(td(val["email_address"]))
 					.append(td(makelabel(val["status"])));
 
+				tr.data("requestdata", JSON.parse(val.content).request);
 				table.row.add(tr).draw(false);
 			});
 		});
-
 	});
+
+	function expand(classdata, requestdata) {
+		var row = $('<div />').addClass('row').addClass("response-row");
+		var col = $("<div />").addClass("col-md-12").appendTo(row);
+		var ul = $("<ul />").appendTo(col)
+		$.each(requestdata, function(i, obj){
+			var name = Object.keys(obj)[0];
+			var value = obj[name];
+			row.append('<li class="list-unstyled"><b>' + name + ':</b> <i>' + value + '</i></li>');
+		});
+		return row;
+	}	
 
 	function td(el){
 		return $("<td />").append(el);
