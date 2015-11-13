@@ -176,6 +176,13 @@ function Ohmage(app, client){
 		});
 	}	
 
+	oh.request.setstatus = function(uuid, status){
+		return oh.call("/access_request/update", {
+			uuid : uuid,
+			status : status
+		});
+	}
+
 	oh.request.read = function(username){
 		return oh.call("/access_request/read", {
 			user_list : username,

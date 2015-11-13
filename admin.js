@@ -1,8 +1,5 @@
 $(function(){
 
-	//hide buttons
-	$("button, .statuslabel").hide();
-
 	//initiate the client
 	var oh = Ohmage("/app", "setup-request");
 	var uuid;
@@ -57,12 +54,30 @@ $(function(){
 		//find outstanding requests
 		oh.request.read().done(function(data){
 			$.each(data, function(uuid, val){
-				var tr = $("<tr />")
-					.append(td(val["creation_time"]))
-					.append(td(val["user"]))
-					.append(td(val["email_address"]))
-					.append(td(makelabel(val["status"])));
+				var tr = $("<tr />");
+				var btn = $(".hidden .widget-template").clone();
+				var button = btn.find("button");
+				var a = btn.find("a").click(function(e){
+					e.preventDefault();
+					var status = $(this).data("status");
+					button.attr("disabled", "disabled");
+					if(status == "delete"){
+						var req = oh.request.delete(uuid).done(function(){
+							table.row(tr).remove().draw();
+						});
+					} else {
+						var req = oh.request.setstatus(uuid, status).done(function(){
+							setbutton(btn, status);
+						});					
+					}
+					req.always(function(){
+						button.removeAttr("disabled");
+					});	
+				});
+				tr.append(td(val["creation_time"])).append(td(val["user"])).append(td(val["email_address"])).append(td(btn).addClass("buttontd"));
+					//.append(td(makelabel(val["status"])));
 
+				setbutton(btn, val["status"]);
 				tr.data("requestdata", JSON.parse(val.content).request);
 				table.row.add(tr).draw(false);
 			});
@@ -83,6 +98,18 @@ $(function(){
 
 	function td(el){
 		return $("<td />").append(el);
+	}
+
+	function setbutton(btn, status){
+		btn.find(".btn-text").empty().append(status);
+		var button = btn.find("button");
+		if(status == "approved"){
+			button.removeClass("btn-danger").removeClass("btn-default").addClass("btn-success");
+		} else if(status == "rejected"){
+			button.removeClass("btn-default").removeClass("btn-success").addClass("btn-danger");
+		} else {
+			button.removeClass("btn-danger").removeClass("btn-success").addClass("btn-default");
+		}
 	}
 
 	function makelabel(status){
