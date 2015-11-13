@@ -31,7 +31,7 @@ $(function(){
 				alert("You are admin, silly!");
 			} 
 
-			if(userdata.permissions.user_setup){
+			if(userdata.permissions.can_setup_users){
 				alert("You have setup privileges!");
 				location.replace("/");
 			} else {
