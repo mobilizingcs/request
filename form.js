@@ -28,7 +28,7 @@ $(function(){
 
 			//test user privileges
 			if(userdata.permissions.admin){
-				alert("You are admin, silly!");
+				//alert("You are admin, silly!");
 			} 
 
 			if(userdata.permissions.can_setup_users){
