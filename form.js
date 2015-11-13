@@ -3,39 +3,36 @@ $(function(){
 	//hide buttons
 	$("button, .statuslabel").hide();
 
-    //initiate the client
-    var oh = Ohmage("/app", "setup-request");
-    var uuid;
+	//initiate the client
+	var oh = Ohmage("/app", "setup-request");
+	var uuid;
 
-    //debug
-    window.oh = oh;
+	//global error handler. In ohmage 200 means unauthenticated
+	oh.callback("error", function(msg, code, req){
+		(code == 200) ? window.location.replace("/#login") : message("<strong>Error! </strong>" + msg);
+	});
 
-    //global error handler. In ohmage 200 means unauthenticated
-    oh.callback("error", function(msg, code, req){
-    	(code == 200) ? window.location.replace("/#login") : message("<strong>Error! </strong>" + msg);
-    });
+	//init app
+	oh.user.whoami().done(function(username){
 
-    //init app
-    oh.user.whoami().done(function(username){
+		//prevent timeout
+		oh.keepalive();
+		$("#subtitle").text(username);
 
-	    //prevent timeout
-	    oh.keepalive();
-	    $("#subtitle").text(username);
+		//user info
+		oh.user.read({user:username}).done(function(data){
+			//prefill some form fields
+			var userdata = data[username];
+			$("#form_name").val(userdata.first_name + " " + userdata.last_name);
+			$("#form_org").val(userdata.organization);
 
-	    //user info
-	    oh.user.read({user:username}).done(function(data){
-	    	//prefill some form fields
-	    	var userdata = data[username];
-	    	$("#form_name").val(userdata.first_name + " " + userdata.last_name);
-	    	$("#form_org").val(userdata.organization);
+			//test user privileges
+			if(userdata.permissions.admin){
+				alert("You are admin, silly!");
+			} 
 
-	    	//test user privileges
-	    	if(userdata.permissions.admin){
-	    		alert("You are admin, silly!");
-	    	} 
-
-	    	if(userdata.permissions.user_setup){
-	    		alert("You have setup privileges!");
+			if(userdata.permissions.user_setup){
+				alert("You have setup privileges!");
 				location.replace("/");
 			} else {
 				oh.request.read(username).done(function(data){
@@ -115,5 +112,5 @@ $(function(){
 		$('html, body').animate({
 			scrollTop: 100
 		}, 200);
-	}  
+	}
 });
