@@ -50,9 +50,8 @@ $(function(){
 						$("#update_button,#delete_button").show();
 						if(reqdata.status == "pending"){
 							$("#pendinglabel").show();
-						} else if(reqdata.status = "rejected"){
-							$("#rejectedlabel").show();
-						}
+						} 
+						$("#" + reqdata.status + "label").show();
 					} else {
 						$("#form_email").val(userdata.email_address);
 						$("#submit_button").show();
