@@ -47,7 +47,7 @@ $(function(){
 							$("#form_" + name).val(val);
 						});
 						$("#form_email").val(reqdata.email_address);
-						$("#update_button,#delete_button").show();
+						$("#update_button").show();
 						if(reqdata.status == "pending"){
 							$("#pendinglabel").show();
 						} 
@@ -93,6 +93,14 @@ $(function(){
 			btn.removeAttr("disabled");
 		});
 	});		
+
+	function validate(el){
+		if(el.val()){
+			return 
+		} else {
+
+		}
+	}
 
 	function contentfields(){
 		var el = $("#contentfields input,#contentfields textarea");
