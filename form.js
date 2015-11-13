@@ -33,7 +33,7 @@ $(function(){
 
 			if(userdata.permissions.can_setup_users){
 				alert("You have setup privileges!");
-				location.replace("/");
+				//location.replace("/");
 			} else {
 				oh.request.read(username).done(function(data){
 					var keys = Object.keys(data)
