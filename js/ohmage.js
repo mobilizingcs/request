@@ -158,16 +158,34 @@ function Ohmage(app, client){
 	oh.survey = {};
 	oh.request = {};
 
-	oh.request.create = function(data){
-		data.type = "user_setup",
-		data.uuid = "123"
-		return oh.call("/access_request/create", data);
+	oh.request.create = function(email, content){
+		return oh.call("/access_request/create", {
+			type : "user_setup",
+			uuid : random_uuid(),
+			email_address : email,
+			content : JSON.stringify({request: content})
+		});
 	}
+
+	oh.request.update = function(uuid, email, content){
+		return oh.call("/access_request/update", {
+			type : "user_setup",
+			uuid : uuid,
+			email_address : email,
+			content : JSON.stringify({request: content})
+		});
+	}	
 
 	oh.request.read = function(username){
 		return oh.call("/access_request/read", {
 			user_list : username,
 			type : "user_setup"
+		});
+	}
+
+	oh.request.delete = function(uuid){
+		return oh.call("/access_request/delete", {
+			request_uuid_list : uuid
 		});
 	}
 
@@ -412,6 +430,19 @@ function Ohmage(app, client){
 			return memo;
 		};
 	};
+
+	//uuid generator
+	function random_uuid() {
+		var uuid = "", i, random;
+		for (i = 0; i < 32; i++) {
+			random = Math.random() * 16 | 0;
+			if (i == 8 || i == 12 || i == 16 || i == 20) {
+				uuid += "-"
+			}
+			uuid += (i == 12 ? 4 : (i == 16 ? (random & 3 | 8) : random)).toString(16);
+		}
+		return uuid;
+	}	
 
 	// test run call
 	oh.config.read().done(function(x){

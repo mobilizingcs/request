@@ -26,7 +26,7 @@
 		<div class="row">
 
 			<div class="page-header">
-				<h1>Create User Request Form <small id="subtitle"></small></h1>
+				<h1>Setup Request Form <small id="subtitle"></small></h1>
 			</div>
 
 			<div class="col-md-10 col-md-offset-1" id="errordiv"></div>
@@ -46,25 +46,37 @@
 					<div class="form-group">
 						<label>Email address</label>
 						<input type="email" class="form-control" id="form_email" placeholder="required">
-					</div>
+					</div>				
 				</div>
 				<div class="col-md-9">
-					<div class="form-group">
-						<label>Project Name</label>
-						<input type="email" class="form-control" id="form_project">
+					<fieldset id="contentfields">
+						<div class="form-group">
+							<label>Project Name</label>
+							<input class="form-control" id="form_project">
+						</div>
+						<div class="form-group">
+							<label>Number of Participants</label>
+							<input class="form-control" id="form_participants" placeholder="Rough estimate">
+						</div>
+						<div class="form-group">
+							<label >Deployment Date</label>
+							<input class="form-control" id="form_deployment" placeholder="Indication of when your project starts and how long it will run">
+						</div>				
+						<div class="form-group">
+							<label>Description</label>
+							<textarea rows="3" class="form-control" id="form_description" placeholder="Brief description of objectives, etc"></textarea>
+						</div>
+					</fieldset>
+
+					<div id="pendinglabel" class="statuslabel form-group">
+						<label>Status:</label>
+						<span class="label label-success">Request Pending</span>
 					</div>
-					<div class="form-group">
-						<label>Number of Participants</label>
-						<input type="email" class="form-control" id="form_participants" placeholder="Rough estimate">
-					</div>
-					<div class="form-group">
-						<label >Deployment Date</label>
-						<input type="email" class="form-control" id="form_deployment" placeholder="Indication of when your project starts and how long it will run">
-					</div>				
-					<div class="form-group">
-						<label>Description</label>
-						<textarea rows="3" class="form-control" placeholder="Brief description of objectives, etc"></textarea>
-					</div>
+
+					<div id="rejectedlabel" class="statuslabel form-group">
+						<label>Status:</label>
+						<span class="label label-success">Request Rejected</span>
+					</div>									
 					
 					<div class="checkbox">
 						<label>
@@ -72,7 +84,9 @@
 						</label>
 					</div>
 
-					<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-envelope"></span> Submit Request</button>
+					<button type="submit" id="submit_button" class="btn btn-default"><span class="glyphicon glyphicon-envelope"></span> Submit Request</button>
+					<button type="submit"  id="update_button" class="btn btn-default"><span class="glyphicon glyphicon-envelope"></span> Update Request</button>
+					<button type="submit" id="delete_button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Delete Request</button>
 				</div>
 			</form>
 
