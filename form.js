@@ -34,30 +34,29 @@ $(function(){
 			if(userdata.permissions.can_setup_users){
 				alert("You have setup privileges!");
 				//location.replace("/");
-			} else {
-				oh.request.read(username).done(function(data){
-					var keys = Object.keys(data)
-					if(keys.length > 0){
-						uuid = keys[0]
-						var reqdata = data[uuid];
-						var content = JSON.parse(reqdata.content)
-						$.each(content.request, function(i, obj){
-							var name = Object.keys(obj)[0];
-							var val = obj[name];
-							$("#form_" + name).val(val);
-						});
-						$("#form_email").val(reqdata.email_address);
-						$("#update_button").show();
-						if(reqdata.status == "pending"){
-							$("#pendinglabel").show();
-						} 
-						$("#" + reqdata.status + "label").show();
-					} else {
-						$("#form_email").val(userdata.email_address);
-						$("#submit_button").show();
+			}
+
+			oh.request.read(username).done(function(data){
+				var pending;
+				$.each(data, function(key, reqdata){
+					var tr = $("<tr />").appendTo("#requesttable");
+					tr.append(td(reqdata.creation_time));
+					tr.append(td(reqdata.user));
+					tr.append(td(reqdata.email_address));
+					tr.append(td(reqdata.type));
+					tr.append(td(makelabel(reqdata.status)));
+					if(reqdata.status == "pending"){
+						uuid = key
+						pending = reqdata;
 					}
 				});
-			}
+				if(pending){
+					populateForm(pending);
+				} else {
+					$("#form_email").val(userdata.email_address);
+					$("#submit_button").show();
+				}
+			});
 		});
 	});
 
@@ -80,7 +79,9 @@ $(function(){
 		var content = contentfields();
 		oh.request.update(uuid, email, content).always(function(){
 			btn.removeAttr("disabled");
-		});
+		}).done(function(){
+			alert("Request updated!");
+		})
 	});
 
 	$("#delete_button").click(function(e){
@@ -92,7 +93,22 @@ $(function(){
 		}).always(function(){
 			btn.removeAttr("disabled");
 		});
-	});		
+	});
+
+	function populateForm(reqdata){
+		var content = JSON.parse(reqdata.content)
+		$.each(content.request, function(i, obj){
+			var name = Object.keys(obj)[0];
+			var val = obj[name];
+			$("#form_" + name).val(val);
+		});
+		$("#form_email").val(reqdata.email_address);
+		$("#update_button").show();
+		if(reqdata.status == "pending"){
+			$("#pendinglabel").show();
+		} 
+		$("#" + reqdata.status + "label").show();
+	}
 
 	function validate(el){
 		if(el.val()){
@@ -110,6 +126,22 @@ $(function(){
 			out[name] = $(field).val()
 			return out;
 		});
+	}
+
+	function td(el){
+		return $("<td />").append(el);
+	}
+
+	function makelabel(status){
+		var label = $("<span />").addClass("label").text(status);
+		if(status == "approved"){
+			label.addClass("label-success");
+		} else if(status == "rejected"){
+			label.addClass("label-danger");
+		} else {
+			label.addClass("label-primary");
+		}
+		return label;
 	}
 
 	function message(msg, type){

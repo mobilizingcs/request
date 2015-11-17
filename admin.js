@@ -74,7 +74,7 @@ $(function(){
 						button.removeAttr("disabled");
 					});	
 				});
-				tr.append(td(val["creation_time"])).append(td(val["user"])).append(td(val["email_address"])).append(td(btn).addClass("buttontd"));
+				tr.append(td(val["creation_time"])).append(td(val["user"])).append(td(val["email_address"])).append(td(val["type"])).append(td(btn).addClass("buttontd"));
 					//.append(td(makelabel(val["status"])));
 
 				setbutton(btn, val["status"]);
