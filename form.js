@@ -23,7 +23,9 @@ $(function(){
 		oh.user.read({user:username}).done(function(data){
 			//prefill some form fields
 			var userdata = data[username];
-			$("#form_name").val(userdata.first_name + " " + userdata.last_name);
+			var first_name = userdata.first_name || "";
+			var last_name = userdata.last_name || "";
+			$("#form_name").val(first_name + " " + last_name);
 			$("#form_org").val(userdata.organization);
 
 			//test user privileges
