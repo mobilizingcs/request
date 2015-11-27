@@ -25,8 +25,6 @@ $(function(){
 			var userdata = data[username];
 			var first_name = userdata.first_name || "";
 			var last_name = userdata.last_name || "";
-			$("#form_name").val(first_name + " " + last_name);
-			$("#form_org").val(userdata.organization);
 
 			//test user privileges
 			if(userdata.permissions.admin){
@@ -38,6 +36,12 @@ $(function(){
 				//location.replace("/");
 			}
 
+			//Form defaults
+			$("#form_name").val(first_name + " " + last_name);
+			$("#form_org").val(userdata.organization);
+			$("#form_email").val(userdata.email_address);
+
+			//Load existing requests
 			oh.request.read(username).done(function(data){
 				var pending;
 				$.each(data, function(key, reqdata){
@@ -50,12 +54,13 @@ $(function(){
 					if(reqdata.status == "pending"){
 						uuid = key
 						pending = reqdata;
+						//tr.addClass("info")
 					}
 				});
 				if(pending){
 					populateForm(pending);
+					$("#update_button").show();
 				} else {
-					$("#form_email").val(userdata.email_address);
 					$("#submit_button").show();
 				}
 			});
@@ -105,7 +110,6 @@ $(function(){
 			$("#form_" + name).val(val);
 		});
 		$("#form_email").val(reqdata.email_address);
-		$("#update_button").show();
 		if(reqdata.status == "pending"){
 			$("#pendinglabel").show();
 		} 
