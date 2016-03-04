@@ -103,8 +103,7 @@ $(function(){
 	});
 
 	function populateForm(reqdata){
-		var content = JSON.parse(reqdata.content)
-		$.each(content.request, function(i, obj){
+		$.each(reqdata.content.request, function(i, obj){
 			var name = Object.keys(obj)[0];
 			var val = obj[name];
 			$("#form_" + name).val(val);

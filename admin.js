@@ -78,7 +78,7 @@ $(function(){
 					//.append(td(makelabel(val["status"])));
 
 				setbutton(btn, val["status"]);
-				tr.data("requestdata", JSON.parse(val.content).request);
+				tr.data("requestdata", val.content.request);
 				table.row.add(tr).draw(false);
 			});
 		});
